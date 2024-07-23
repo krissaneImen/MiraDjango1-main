@@ -1,0 +1,48 @@
+{
+    "salutation": [
+        {
+            "question": "Bonjour ! Comment puis-je vous aider aujourd'hui dans le domaine des technologies de l'information ?",
+            "keywords": [
+                "bonjour",
+                "salut",
+                "rahma"
+            ]
+        },
+        {
+            "question": "Salut ! Que puis-je faire pour vous dans le domaine des technologies de l'information ?",
+            "keywords": [
+                "bonjour",
+                "salut",
+                "coucou"
+            ]
+        }
+    ],
+    "recherche_information": [
+        {
+            "question": "Bien sûr, je peux vous aider à trouver des ressources en ligne pour approfondir vos études en technologies de l'information. Quel sujet précis vous intéresse ?",
+            "keywords": [
+                "ressources",
+                "études",
+                "technologies de l'information"
+            ]
+        },
+        {
+            "question": "Je serais ravi de vous aider à trouver des informations sur les études en technologies de l'information. Avez-vous des questions spécifiques ?",
+            "keywords": [
+                "informations",
+                "études",
+                "technologies de l'information"
+            ]
+        }
+    ],
+    "nouvelle_intention": [
+        
+        {
+            "question": "Nouvelle question",
+            "keywords": [
+                "nouveau",
+                "mot-clé"
+            ]
+        }
+    ]
+}

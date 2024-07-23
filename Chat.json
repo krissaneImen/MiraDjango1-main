@@ -1,0 +1,11 @@
+[
+    {
+      "patterns": ["Quel est le cours sur les mathématiques ?", "Pouvez-vous m'aider avec les maths ?"],
+      "responses": ["Je suis désolé, je n'ai pas encore appris cette information."]
+    },
+    {
+      "patterns": ["Où puis-je trouver des informations sur la biologie ?", "Des ressources pour la biologie ?"],
+      "responses": ["Je suis désolé, je ne sais pas comment répondre à cela."]
+    }
+  ]
+  

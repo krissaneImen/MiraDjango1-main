@@ -1,0 +1,8 @@
+[
+    {"question": "Qu'est-ce que la POO?", "answer": "La Programmation Orientée Objet (POO) est un paradigme de programmation basé sur le concept d'objets."},
+    {"question": "Quels sont les principes de la POO?", "answer": "Les quatre principes de la POO sont l'encapsulation, l'héritage, l'abstraction et le polymorphisme."},
+    {"question": "Comment fonctionne l'héritage?", "answer": "L'héritage permet à une classe de dériver les propriétés et méthodes d'une autre classe."},
+    {"question": "Qu'est-ce qu'une classe?", "answer": "Une classe est un plan pour créer des objets qui encapsulent des données et des méthodes pour manipuler ces données."},
+    {"question": "Qu'est-ce qu'un objet?", "answer": "Un objet est une instance d'une classe, contenant des données et des méthodes définies dans la classe."},
+    {"question": "Comment définir une classe en Python?", "answer": "En Python, une classe se définit avec le mot-clé 'class' suivi du nom de la classe."}
+]
