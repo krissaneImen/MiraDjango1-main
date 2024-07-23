@@ -1,148 +1,125 @@
-### Mira Backend avec Django
+Here’s a README file for the backend of your Mira project using Django and MongoEngine:
 
-#### Aperçu
-Mira est un projet Django qui utilise MongoEngine pour la gestion de la base de données. Ce fichier README fournit des instructions pour configurer et exécuter la partie backend de l'application Mira.
+---
 
-#### Prérequis
-Assurez-vous d'avoir les éléments suivants installés :
+# Mira Django Backend
+
+## Aperçu
+
+Le backend de Mira est construit avec Django, utilisant MongoEngine pour la gestion des modèles de données et Django REST Framework pour les API. Ce fichier README vous guidera à travers la configuration et l'exécution du backend.
+
+## Prérequis
+
+Assurez-vous que vous avez les éléments suivants installés sur votre machine :
 - **Python** : Version 3.8 ou supérieure
-- **Django** : Version 4.x
-- **MongoEngine** : Version 0.24.0 ou supérieure
-- **Django REST Framework** : Version 3.14.0 ou supérieure
-- **Google Generative AI** (si utilisé) : Pour les fonctionnalités spécifiques
+- **Django** : Version 4.2 ou supérieure
+- **MongoEngine** : Pour la gestion des modèles MongoDB
+- **Django REST Framework** : Pour les API
+- **MongoDB** : Serveur de base de données
 
-#### Installation
+## Installation
 
-**Installation des dépendances**
-1. Créez un environnement virtuel et activez-le :
+1. **Cloner le dépôt**
+
+   ```sh
+   git clone https://github.com/yourusername/mira-django-backend.git
+   cd mira-django-backend
+   ```
+
+2. **Créer un environnement virtuel et l'activer**
 
    ```sh
    python -m venv venv
-   source venv/bin/activate  # Sur Windows, utilisez `venv\Scripts\activate`
+   source venv/bin/activate  # Sur Windows : venv\Scripts\activate
    ```
 
-2. Installez les dépendances requises :
+3. **Installer les dépendances**
 
    ```sh
-   pip install django mongoengine djangorestframework google-generativeai
+   pip install -r requirements.txt
    ```
 
-3. Assurez-vous que toutes les dépendances sont listées dans un fichier `requirements.txt` pour faciliter la gestion des packages :
+4. **Configurer MongoDB**
 
-   ```sh
-   pip freeze > requirements.txt
+   Assurez-vous que MongoDB est en cours d'exécution. La connexion à MongoDB est configurée dans `settings.py`.
+
+## Configuration
+
+1. **Paramétrer les variables d'environnement**
+
+   Vous devez configurer les variables d'environnement nécessaires pour le projet. Ajoutez un fichier `.env` à la racine du projet avec les informations suivantes :
+
+   ```env
+   SECRET_KEY=your_secret_key
+   DEBUG=True
+   EMAIL_HOST='mail.coursenligne.info'
+   EMAIL_PORT=465
+   EMAIL_HOST_USER='adminmira@coursenligne.info'
+   EMAIL_HOST_PASSWORD='1M0tdepasse---'
    ```
 
-#### Configuration du Projet
+2. **Configurer la base de données**
 
-1. **Configuration MongoEngine**
-   Assurez-vous que MongoEngine est correctement configuré dans votre fichier `settings.py` :
+   La connexion à MongoDB est définie dans `settings.py`. Assurez-vous que l'URL de connexion est correcte :
 
    ```python
-   from mongoengine import connect
-
-   connect(
-       db='mira_db',
-       host='localhost',
-       port=27017
+   mongoengine.connect(
+       db='dbmira', 
+       host='mongodb://localhost:27017/dbmira'
    )
    ```
 
-2. **Définition des Modèles**
-   Voici quelques exemples de modèles définis dans `models.py` :
+## Exécution
 
-   ```python
-   from mongoengine import Document, StringField, IntField, DateTimeField, BooleanField, EmailField, ListField, FileField
-   from django.utils import timezone
+1. **Lancer le serveur Django**
 
-   class FichePresence(Document):
-       date = DateTimeField(default=timezone.now)
-       etudiant = StringField()
-       presente = BooleanField()
-
-   class Etudiant(Document):
-       nom = StringField()
-       email = EmailField()
+   ```sh
+   python manage.py runserver
    ```
 
-3. **Définition des Sérialiseurs**
-   Voici des exemples de sérialiseurs définis dans `Serializers.py` :
+2. **Accéder à l'API**
 
-   ```python
-   from rest_framework import serializers
-   from .models import FichePresence, Etudiant
+   Vous pouvez accéder à l'API via `http://localhost:8000/`. Assurez-vous que vos routes API sont correctement configurées dans les fichiers `urls.py` des applications.
 
-   class FichePresenceSerializer(serializers.Serializer):
-       date = serializers.DateTimeField()
-       etudiant = serializers.CharField()
-       presente = serializers.BooleanField()
+## Structure du projet
 
-   class EtudiantSerializer(serializers.Serializer):
-       nom = serializers.CharField()
-       email = serializers.EmailField()
-   ```
-
-4. **Définition des Vues**
-   Les vues sont définies dans `views.py` :
-
-   ```python
-   from rest_framework.decorators import api_view
-   from rest_framework.response import Response
-   from rest_framework import status
-   from .models import FichePresence, Etudiant
-   from .Serializers import FichePresenceSerializer, EtudiantSerializer
-
-   @api_view(['GET', 'POST'])
-   def fiche_presence_list(request):
-       if request.method == 'GET':
-           fiches = FichePresence.objects.all()
-           serializer = FichePresenceSerializer(fiches, many=True)
-           return Response(serializer.data)
-
-       if request.method == 'POST':
-           serializer = FichePresenceSerializer(data=request.data)
-           if serializer.is_valid():
-               serializer.save()
-               return Response(serializer.data, status=status.HTTP_201_CREATED)
-           return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-   ```
-
-5. **Configuration des URL**
-   Ajoutez les routes dans `urls.py` :
-
-   ```python
-   from django.urls import path
-   from . import views
-
-   urlpatterns = [
-       path('fiches/', views.fiche_presence_list),
-       # Ajoutez d'autres routes ici
-   ]
-   ```
-
-#### Exécution du Serveur
-Pour lancer le serveur de développement Django, utilisez la commande suivante :
-
-```sh
-python manage.py runserver
+```plaintext
+miraDjango/
+│
+├── manage.py                # Script pour exécuter des commandes Django
+├── miraDjango/              # Répertoire principal du projet
+│   ├── __init__.py
+│   ├── settings.py          # Configuration du projet Django
+│   ├── urls.py              # Configuration des routes URL
+│   └── wsgi.py              # Configuration WSGI pour le déploiement
+├── app_name/                # Répertoire de l'application (remplacez 'app_name' par le nom réel)
+│   ├── __init__.py
+│   ├── models.py            # Définition des modèles de données avec MongoEngine
+│   ├── views.py             # Logique des vues
+│   ├── serializers.py       # Sérialiseurs pour les API
+│   ├── urls.py              # Routes spécifiques à l'application
+│   └── forms.py             # Formulaires Django
+├── requirements.txt         # Liste des dépendances Python
+└── README.md                # Documentation du projet
 ```
 
-#### Développement et Tests
-- **Tests** : Utilisez les commandes Django pour exécuter les tests :
+## Développement et tests
 
-  ```sh
-  python manage.py test
-  ```
+Pour exécuter les tests, utilisez :
 
-- **Débogage** : Assurez-vous que vous utilisez un débogueur pour suivre les erreurs et les exceptions dans votre code.
+```sh
+python manage.py test
+```
 
-#### Ressources Supplémentaires
-- [Documentation Django](https://docs.djangoproject.com/)
+## Ressources supplémentaires
+
+- [Documentation Django](https://docs.djangoproject.com/en/4.2/)
 - [Documentation MongoEngine](https://docs.mongoengine.org/)
 - [Documentation Django REST Framework](https://www.django-rest-framework.org/)
 
-#### Contribution
-Pour contribuer à ce projet, veuillez forker le dépôt, apporter vos modifications, et soumettre une pull request. Assurez-vous que votre code respecte les normes de codage du projet et inclut des tests pour les nouvelles fonctionnalités.
+## Contribution
+
+Si vous souhaitez contribuer à ce projet, veuillez forker le dépôt et soumettre une pull request. Assurez-vous que votre code respecte les normes de codage du projet et inclut des tests pour les nouvelles fonctionnalités.
 
 ---
 
