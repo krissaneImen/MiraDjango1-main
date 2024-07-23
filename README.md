@@ -1,7 +1,3 @@
-Here’s a README file for the backend of your Mira project using Django and MongoEngine:
-
----
-
 # Mira Django Backend
 
 ## Aperçu
